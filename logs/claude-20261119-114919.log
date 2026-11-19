@@ -1,0 +1,8 @@
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I didn't publish an article this run, and I couldn't commit the run log.
+
+- **Skipped:** an article for 2026-11-19 is already published. It's "A Species of One: How Wood's Cycad Came to Survive Only as Copies of a Single Male". It's listed in `state/publications.json`, and its file is at `posts/2026/11/2026-11-19-woods-cycad-single-male.md`. CLAUDE.md allows one article per day, so I did no new research.
+- **Run log:** I wrote `logs/2026-11-19-run-skip-already-published-1200.md`. It's untracked.
+- **Commit blocked:** the permission system denied my `git add` and `git commit`, and this session has no way to approve it. The log will need committing in a later session or by hand. `logs/claude-20261119-114919.log` was already untracked at the start and is also uncommitted.
+- **Earlier block:** my first inspection command was also denied. It combined `cd` with relative paths, so I switched to absolute paths.
+[2026-11-19T11:49:36-06:00] Claude exit status: 0
