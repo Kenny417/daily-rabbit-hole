@@ -8,7 +8,10 @@
       "Edit(./state/**)",
       "Edit(./logs/**)",
       "Bash(git status *)",
-      "Bash(git diff *)",
+      "Bash(git diff)",
+      "Bash(git diff --staged)",
+      "Bash(git diff --stat)",
+      "Bash(git diff --staged --stat)",
       "Bash(git add *)",
       "Bash(git commit *)"
     ],
@@ -18,10 +21,6 @@
       "Edit(./CLAUDE.md)",
       "Read(~/.ssh/**)",
       "Read(./.env*)",
-      "Bash(git diff *--output*)",
-      "Bash(git diff *--ext-diff*)",
-      "Bash(git diff *--textconv*)",
-      "Bash(git commit *--no-verify*)",
       "Bash(git * -c *)",
       "Bash(git -c *)"
     ]
