@@ -1,16 +1,29 @@
-
 {
   "permissions": {
     "allow": [
       "WebSearch",
       "WebFetch",
       "Read",
-      "Write",
-      "Edit",
+      "Edit(./posts/**)",
+      "Edit(./state/**)",
+      "Edit(./logs/**)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git add *)",
       "Bash(git commit *)"
+    ],
+    "deny": [
+      "Edit(./.git/**)",
+      "Edit(./.claude/**)",
+      "Edit(./CLAUDE.md)",
+      "Read(~/.ssh/**)",
+      "Read(./.env*)",
+      "Bash(git diff *--output*)",
+      "Bash(git diff *--ext-diff*)",
+      "Bash(git diff *--textconv*)",
+      "Bash(git commit *--no-verify*)",
+      "Bash(git * -c *)",
+      "Bash(git -c *)"
     ]
   }
 }
