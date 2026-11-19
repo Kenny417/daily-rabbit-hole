@@ -1,0 +1,7 @@
+Warning: no stdin data received in 3s, proceeding without it. If piping from a slow command, redirect stdin explicitly: < /dev/null to skip, or wait longer.
+I didn't publish an article this run, because one already went out today. The 2026-11-19 piece on Wood's cycad (`posts/2026/11/2026-11-19-woods-cycad-single-male.md`) is already in `state/publications.json`.
+
+I did no research and left the state file unchanged. I wrote a skip log at `logs/2026-11-19-run-skip-already-published-1150.md` and committed it as `ad6aa24`.
+
+I left the untracked `logs/claude-20261119-114235.log` out of the commit.
+[2026-11-19T11:42:46-06:00] Claude exit status: 0
