@@ -140,8 +140,10 @@ function linkCitations(html) {
 
 // Theme: "auto" (no data-theme, follows the OS), "light" or "dark", saved per browser.
 // Runs in <head> so the saved theme applies before first paint (no flash).
-const THEME_HEAD_SCRIPT = `<script>(function(){var r=document.documentElement;r.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')r.dataset.theme=t;}catch(e){}})();</script>`;
+const THEME_HEAD_SCRIPT = `<script>(function(){var r=document.documentElement;try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')r.dataset.theme=t;}catch(e){}})();</script>`;
 
+// Created by THEME_SCRIPT, so it never appears where it can't work (no JS,
+// or no CSS as in Lynx/reader modes).
 const THEME_BUTTON = `<button class="theme-toggle" type="button">
     <svg class="i-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
     <svg class="i-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -150,7 +152,11 @@ const THEME_BUTTON = `<button class="theme-toggle" type="button">
 
 const THEME_SCRIPT = `<script>
 (function () {
-  var btn = document.querySelector('.theme-toggle');
+  var nav = document.querySelector('.masthead nav ul');
+  var li = document.createElement('li');
+  li.innerHTML = ${JSON.stringify(THEME_BUTTON)};
+  nav.appendChild(li);
+  var btn = li.firstChild;
   var root = document.documentElement;
   var order = ['auto', 'light', 'dark'];
   var names = { auto: 'Auto (follows system)', light: 'Light', dark: 'Dark' };
@@ -191,7 +197,13 @@ ${canonical}
 <body>
 <header class="masthead">
   <a class="brand" href="/">The Daily <span>Rabbit Hole</span></a>
-  <nav><a href="/">Articles</a><a href="/tags/">Topics</a><a href="/feed.xml">RSS</a>${THEME_BUTTON}</nav>
+  <nav aria-label="Site">
+    <ul>
+      <li><a href="/">Articles</a></li>
+      <li><a href="/tags/">Topics</a></li>
+      <li><a href="/feed.xml">RSS</a></li>
+    </ul>
+  </nav>
 </header>
 <main>
 ${body}
