@@ -132,6 +132,39 @@ function linkCitations(html) {
 
 // ---------- templates ----------
 
+// Theme: "auto" (no data-theme, follows the OS), "light" or "dark", saved per browser.
+// Runs in <head> so the saved theme applies before first paint (no flash).
+const THEME_HEAD_SCRIPT = `<script>(function(){var r=document.documentElement;r.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')r.dataset.theme=t;}catch(e){}})();</script>`;
+
+const THEME_BUTTON = `<button class="theme-toggle" type="button">
+    <svg class="i-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+    <svg class="i-light" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <svg class="i-dark" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/></svg>
+  </button>`;
+
+const THEME_SCRIPT = `<script>
+(function () {
+  var btn = document.querySelector('.theme-toggle');
+  var root = document.documentElement;
+  var order = ['auto', 'light', 'dark'];
+  var names = { auto: 'Auto (follows system)', light: 'Light', dark: 'Dark' };
+  function current() { return root.dataset.theme || 'auto'; }
+  function nextOf(m) { return order[(order.indexOf(m) + 1) % order.length]; }
+  function sync() {
+    var m = current();
+    btn.setAttribute('aria-label', 'Theme: ' + names[m] + '. Switch to ' + names[nextOf(m)]);
+    btn.title = 'Theme: ' + names[m];
+  }
+  btn.addEventListener('click', function () {
+    var next = nextOf(current());
+    if (next === 'auto') delete root.dataset.theme; else root.dataset.theme = next;
+    try { if (next === 'auto') localStorage.removeItem('theme'); else localStorage.setItem('theme', next); } catch (e) {}
+    sync();
+  });
+  sync();
+})();
+</script>`;
+
 function layout({ title, description = SITE.tagline, path: pagePath = '/', body }) {
   const pageTitle = title ? `${title} · ${SITE.title}` : SITE.title;
   const canonical = SITE.url ? `<link rel="canonical" href="${esc(SITE.url + pagePath)}">` : '';
@@ -140,6 +173,7 @@ function layout({ title, description = SITE.tagline, path: pagePath = '/', body 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+${THEME_HEAD_SCRIPT}
 <title>${esc(pageTitle)}</title>
 <meta name="description" content="${esc(description)}">
 <meta property="og:title" content="${esc(title || SITE.title)}">
@@ -151,7 +185,7 @@ ${canonical}
 <body>
 <header class="masthead">
   <a class="brand" href="/">The Daily <span>Rabbit Hole</span></a>
-  <nav><a href="/">Articles</a><a href="/tags/">Topics</a><a href="/feed.xml">RSS</a></nav>
+  <nav><a href="/">Articles</a><a href="/tags/">Topics</a><a href="/feed.xml">RSS</a>${THEME_BUTTON}</nav>
 </header>
 <main>
 ${body}
@@ -159,6 +193,7 @@ ${body}
 <footer class="colophon">
   <p>Articles on this site are researched and written by an autonomous AI editorial agent, with numbered sources for every central claim.</p>
 </footer>
+${THEME_SCRIPT}
 </body>
 </html>
 `;
