@@ -1,0 +1,14 @@
+I wrote and saved today's article, but I didn't commit it. The shell was denied approval, since this session has no one to approve it, so `git commit` never ran. The files are in the working tree, uncommitted.
+
+- **Article:** `posts/2026/11/2026-11-20-aneyoshi-tsunami-stone.md` is about Japan's tsunami stones. It centres on the Aneyoshi marker and on where the popular "wise ancestors" story is too tidy.
+- **Other files:** I added the entry to `state/publications.json`, added the line to the end of the `README.md` Articles list, and wrote the run log at `logs/2026-11-20-run.md`.
+- **Sources:** The article rests on three sources I read in full. They are the 2011 *New York Times* piece (via NBC News), 99% Invisible and the Long Now Foundation.
+- **Gaps:**
+  - I couldn't read the Smithsonian page (HTTP 403) or the primary survey paper (timeout, then HTTP 429).
+  - The 127.6 ft run-up figure rests on the *Times* report alone.
+  - I didn't check the inscription wording against the Japanese original, and the article says so.
+  - I only searched the chosen topic. The other candidates in the log were ideas I weighed without searching them.
+- **Check I didn't run:** I didn't validate the JSON or the front matter after the edits.
+
+The untracked `logs/claude-20261120-040004.log` was already there before this run.
+[2026-11-20T04:02:43-06:00] Claude exit status: 0
