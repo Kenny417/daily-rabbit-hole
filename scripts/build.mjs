@@ -274,6 +274,16 @@ ${posts.slice(0, 30).map(item).join('\n')}
 `;
 }
 
+// entries: [{ path: '/posts/x/', lastmod: 'YYYY-MM-DD' }]
+function sitemap(entries) {
+  const url = (e) => `<url><loc>${esc(SITE.url + e.path)}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`;
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries.map(url).join('\n')}
+</urlset>
+`;
+}
+
 // ---------- build ----------
 
 const files = await walk(POSTS_DIR);
@@ -353,8 +363,22 @@ await writeOut(
 
 if (SITE.url) {
   await writeOut('feed.xml', rss(posts));
+  // Every indexable page; listing pages take the date of their newest article.
+  // (posts and each byTag list are newest first.)
+  await writeOut(
+    'sitemap.xml',
+    sitemap([
+      { path: '/', lastmod: posts[0]?.date },
+      ...posts.map((p) => ({ path: `/posts/${p.slug}/`, lastmod: p.date })),
+      { path: '/tags/', lastmod: posts[0]?.date },
+      ...tags.map((t) => ({ path: `/tags/${tagSlug(t)}/`, lastmod: byTag.get(t)[0].date })),
+    ]),
+  );
 } else {
-  console.warn('SITE_URL not set: skipping feed.xml (RSS needs absolute links).');
+  console.warn('SITE_URL not set: skipping feed.xml and sitemap.xml (they need absolute links).');
 }
+
+// Allow all crawlers and point them at the sitemap (which needs an absolute URL).
+await writeOut('robots.txt', `User-agent: *\nAllow: /\n${SITE.url ? `\nSitemap: ${SITE.url}/sitemap.xml\n` : ''}`);
 
 console.log(`Built ${posts.length} article(s) and ${tags.length} topic page(s) into dist/`);
