@@ -192,6 +192,9 @@ ${THEME_HEAD_SCRIPT}
 <meta property="og:description" content="${esc(description)}">
 ${canonical}
 <link rel="alternate" type="application/rss+xml" title="${esc(SITE.title)}" href="/feed.xml">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -286,7 +289,11 @@ posts.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug
 
 await rm(OUT, { recursive: true, force: true });
 await mkdir(OUT, { recursive: true });
-await copyFile(path.join(SITE_DIR, 'styles.css'), path.join(OUT, 'styles.css'));
+// Static assets served from the site root. (site/daily-rabbit-hole-logo.png is
+// the large source image the icons were made from; it is not published.)
+for (const f of ['styles.css', 'favicon.ico', 'icon-192.png', 'apple-touch-icon.png']) {
+  await copyFile(path.join(SITE_DIR, f), path.join(OUT, f));
+}
 
 // Home page
 await writeOut(
