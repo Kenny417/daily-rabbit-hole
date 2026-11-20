@@ -49,6 +49,25 @@ async function writeOut(rel, content) {
   await writeFile(file, content, 'utf8');
 }
 
+// ---------- markdown safety ----------
+// Posts are written by an agent that reads untrusted web pages, so treat their
+// Markdown as untrusted: raw HTML is shown as text, and only http(s), mailto,
+// relative and #fragment URLs become links or images.
+const SAFE_URL = /^(https?:|mailto:|[/#.]|[^:]*$)/i;
+const isSafeUrl = (href) => SAFE_URL.test(String(href ?? '').trim().replace(/[\u0000-\u001f\s]+/g, ''));
+
+marked.use({
+  renderer: {
+    html: ({ text }) => esc(text),
+    link(token) {
+      return isSafeUrl(token.href) ? false : this.parser.parseInline(token.tokens);
+    },
+    image(token) {
+      return isSafeUrl(token.href) ? false : esc(token.text);
+    },
+  },
+});
+
 // ---------- parsing ----------
 
 function parsePost(file, text) {
