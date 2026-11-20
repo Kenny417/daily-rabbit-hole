@@ -1,9 +1,9 @@
 :root {
   --paper: #f7f3ec;
   --ink: #1f1b16;
-  --muted: #6b6257;
+  --muted: #544b41;
   --rule: #ddd4c6;
-  --accent: #a2482b;
+  --accent: #94401f;
   --accent-soft: #f0e2d6;
   --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Bitstream Charter", Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -14,10 +14,10 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --paper: #17140f;
-    --ink: #ebe4d8;
-    --muted: #a39887;
+    --ink: #f3eee6;
+    --muted: #c9bfb0;
     --rule: #3a332a;
-    --accent: #e08a63;
+    --accent: #ec9a74;
     --accent-soft: #2e221a;
   }
 }
