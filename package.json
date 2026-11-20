@@ -1,0 +1,16 @@
+{
+  "name": "daily-rabbit-hole",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "npm run build && python3 -m http.server 8788 -d dist"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "marked": "^18.2.1",
+    "yaml": "^2.9.1"
+  }
+}
