@@ -53,17 +53,31 @@ async function writeOut(rel, content) {
 // Posts are written by an agent that reads untrusted web pages, so treat their
 // Markdown as untrusted: raw HTML is shown as text, and only http(s), mailto,
 // relative and #fragment URLs become links or images.
-const SAFE_URL = /^(https?:|mailto:|[/#.]|[^:]*$)/i;
-const isSafeUrl = (href) => SAFE_URL.test(String(href ?? '').trim().replace(/[\u0000-\u001f\s]+/g, ''));
+// Links and images are rendered here (not by marked) so every "&" is escaped:
+// an entity like "&#58;" can then never be decoded by the browser into a scheme.
+const SAFE_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
+function isSafeUrl(href) {
+  const raw = String(href ?? '').replace(/[\u0000- \u007f]+/g, '');
+  if (raw.split(/[/?#]/)[0].includes('&')) return false; // no entities before the path
+  try {
+    return SAFE_PROTOCOLS.has(new URL(raw, 'https://relative.invalid/').protocol);
+  } catch {
+    return false;
+  }
+}
+const titleAttr = (title) => (title ? ` title="${esc(title)}"` : '');
 
 marked.use({
   renderer: {
     html: ({ text }) => esc(text),
     link(token) {
-      return isSafeUrl(token.href) ? false : this.parser.parseInline(token.tokens);
+      const text = this.parser.parseInline(token.tokens);
+      if (!isSafeUrl(token.href)) return text;
+      return `<a href="${esc(token.href)}"${titleAttr(token.title)}>${text}</a>`;
     },
     image(token) {
-      return isSafeUrl(token.href) ? false : esc(token.text);
+      if (!isSafeUrl(token.href)) return esc(token.text);
+      return `<img src="${esc(token.href)}" alt="${esc(token.text)}"${titleAttr(token.title)}>`;
     },
   },
 });
