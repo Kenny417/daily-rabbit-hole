@@ -122,11 +122,17 @@ function linkCitations(html) {
   let n = 0;
   const items = m[2].replace(/<li>/g, () => `<li id="source-${++n}">`);
   const sources = `<h2 id="sources">Sources</h2>\n<ol class="sources"${m[1]}>${items}</ol>`;
-  // Only replace markers in text, never inside a tag's attributes.
+  // A run like "word [1][2]." becomes "word[1][2]." (raised citations sit
+  // against the word) wrapped in a no-wrap span, so a line break can never
+  // separate a claim from its citation. Only matches text, never attributes.
+  const CITE_RUN = /([^\s<>[\]]*)\s*((?:\[\d+\])+)([.,;:!?)]*)(?![^<]*>)/g;
   const link = (s) =>
-    s.replace(/\[(\d+)\](?![^<]*>)/g, (all, d) =>
-      Number(d) >= 1 && Number(d) <= n ? `<sup class="cite"><a href="#source-${d}">[${d}]</a></sup>` : all,
-    );
+    s.replace(CITE_RUN, (all, word, cites, punct) => {
+      const linked = cites.replace(/\[(\d+)\]/g, (m, d) =>
+        Number(d) >= 1 && Number(d) <= n ? `<sup class="cite"><a href="#source-${d}">[${d}]</a></sup>` : m,
+      );
+      return linked === cites ? all : `<span class="cite-run">${word}${linked}${punct}</span>`;
+    });
   return link(html.slice(0, m.index)) + sources + link(html.slice(m.index + m[0].length));
 }
 

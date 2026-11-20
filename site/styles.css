@@ -154,7 +154,8 @@ main { max-width: var(--measure); margin: 0 auto; padding: 0 1rem 4rem; }
 .prose img { max-width: 100%; height: auto; }
 .prose code { font-size: 0.9em; background: var(--accent-soft); padding: 0.1em 0.3em; border-radius: 3px; }
 
-.cite { font: 600 0.65em/0 var(--sans); }
+.cite-run { white-space: nowrap; }
+.cite { font: 600 0.65em/0 var(--sans); margin-left: 0.08em; }
 .cite a { text-decoration: none; color: var(--accent); }
 
 #sources { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--sans); color: var(--muted); }
