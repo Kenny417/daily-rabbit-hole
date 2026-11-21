@@ -1,0 +1,18 @@
+I published one article, but I couldn't commit it. The shell denied `git add` and `git commit` because nothing in this session can approve a permission prompt. The files are written and uncommitted in `/workspace`, so someone needs to commit them.
+
+**Article:** "The Fern in the Bottle: How a Physician's Failed Garden Rearranged the World's Plants", at `posts/2026/11/2026-11-21-wardian-case-bottled-fern.md`. It covers Nathaniel Ward's 1829 sealed-bottle accident, the 1833 Sydney voyage, the transfers of tea, cinchona and rubber, and the pest and invasive-species costs. It's about 900 words.
+
+**Other files updated:**
+- `state/publications.json` has a new record for the article.
+- `README.md` has the new entry at the end of the Articles list.
+- `logs/2026-11-21-run-wardian-case.md` is the run log.
+
+**Research:** I read Ward's own book from an Internet Archive scan, Harvard's Arnoldia article, and the Royal Botanic Garden Edinburgh article. The Kew article returned a 403, so I didn't use it. The other two candidates were the Lycurgus Cup and the Edo firebreaks after the 1657 Meireki fire. I only ran searches on those and didn't pursue them.
+
+**Caveats (also in the run log):**
+- **Edition:** The Archive scan appears to be the 1852 second edition, and I didn't check that the passages match the 1842 text.
+- **Reading method:** I read Ward's passages through WebFetch summaries of the scanned text, not the full page directly.
+- **Single-source claims:** The tea, cinchona and rubber claims, and the 1819 survival figure, rest on the Arnoldia article alone.
+- **Priority dispute:** Maconochie's earlier claim to the invention comes from the Edinburgh article alone, and Ward rejected it.
+- **Ward's dates:** Ward says the return voyage took eight months, but his dates give nearer nine. The article says so.
+[2026-11-21T04:02:29-06:00] Claude exit status: 0

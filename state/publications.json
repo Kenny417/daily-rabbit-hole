@@ -25,5 +25,14 @@
     "path": "posts/2026/11/2026-11-20-aneyoshi-tsunami-stone.md",
     "tags": ["tsunami", "japan", "disaster-memory", "history"],
     "category": "geography"
+  },
+  {
+    "date": "2026-11-21",
+    "slug": "wardian-case-bottled-fern",
+    "title": "The Fern in the Bottle: How a Physician's Failed Garden Rearranged the World's Plants",
+    "topic": "The Wardian case: Ward's 1829 sealed-bottle accident, the 1833 Sydney voyage, plant transfers (tea, cinchona, rubber), and invasive-species costs",
+    "path": "posts/2026/11/2026-11-21-wardian-case-bottled-fern.md",
+    "tags": ["botany", "history-of-technology", "empire", "invasive-species"],
+    "category": "nature"
   }
 ]
